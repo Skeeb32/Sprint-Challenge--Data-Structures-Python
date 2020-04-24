@@ -1,5 +1,52 @@
 import time
 
+class BinarySearchTree:
+    def __init__(self, value):
+        # Constructor
+        self.value = value
+        self.left = None
+        self.right = None
+    # Methods
+        # insert (value) goal: find it's proper place
+        # if value < current
+        # if (left) go left
+        # else inser
+        # if value > current 
+        # if (right) go right
+        # else insert
+# contains(value) => True/False
+# if(current value === value?)
+# return trun
+# else check if it is > "go right" node.right = BST(value)
+# else opposite
+    
+    # Contains
+    def insert(self, value):
+        node = self
+        while True:
+            if value >= node.value:
+                if(node.right != None):
+                    node = node.right
+                else:
+                    node.right = BinarySearchTree(value)
+            else:
+                if(node.left != None):
+                    node = node.left
+                else:
+                    node.left = BinarySearchTree(value)
+    
+    def contains(self, target):
+        node = self
+        while node != None:
+            if target == node.value:
+                return True
+            else:
+                if target > node.value:
+                    node = node.right
+                else:
+                    node = node.left
+        return False
+
 start_time = time.time()
 
 f = open('names_1.txt', 'r')
@@ -18,6 +65,14 @@ for name_1 in names_1:
         if name_1 == name_2:
             duplicates.append(name_1)
 
+b = BinarySearchTree(names_1[0])
+
+for i in range(1, len(names_1)):
+    b.insert(names_1[i])
+
+for j in names_2:
+    if b.contains(j):
+        duplicates.append(j)
 end_time = time.time()
 print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
 print (f"runtime: {end_time - start_time} seconds")
